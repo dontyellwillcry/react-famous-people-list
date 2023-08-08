@@ -11,16 +11,16 @@ function FamousSection() {
   useEffect(() => { // useEffect will load fetchPeople from the very start.
     fetchPeople()
   }, [])
-  // TODO: on load, call the fetchPeople() function (added useEffect)
+  // TODO: on load, call the fetchPeople() function (added useEffect/Finished)
 //-------------------------------------------------------------------------------------------------------------------
 //      GET
 
   const fetchPeople = () => {
-    // TODO: fetch the list of people from the server
+    // TODO: fetch the list of people from the server (FINISHED)
     console.log('inside of fetchPeople')
-    axios.get('/famous_people')
+    axios.get('/people')
     .then((response) =>{
-      console.log(response.data)
+      console.log('this is the response', response.data)
       setPeopleArray(response.data) //will update our famousPeopleArray with what we GET from database
     }).catch((error) => {
       console.log('Error GET /famous_people', error)
@@ -33,6 +33,13 @@ function FamousSection() {
     console.log(`The person is ${famousPersonName} and they're famous for ${famousPersonRole}`);
     
     // TODO: create POST request to add this new person to the database
+    axios.post('/people', {name: famousPersonName, role: famousPersonRole}
+    ).then((response) => {
+      console.log(response);
+      fetchPeople()
+    }).catch((error) => {
+      console.log('Error POST /people')
+    })
 
     // HINT: the server is expecting a person object 
     //       with a `name` and a `role` property
@@ -52,7 +59,7 @@ function FamousSection() {
           {famousPersonName} is famous for "{famousPersonRole}".
         </p>
         <ul>
-          {/* TODO: Render the list of famous people */}
+          {famousPeopleArray}
         </ul>
       </section>
     );
