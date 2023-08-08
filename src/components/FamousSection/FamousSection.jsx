@@ -1,17 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './FamousSection.css';
+import axios from 'axios';
 
 function FamousSection() {
   let [famousPersonName, setPersonName] = useState('');
   let [famousPersonRole, setPersonRole] = useState('');
   let [famousPeopleArray, setPeopleArray] = useState([]);
 
-  // TODO: on load, call the fetchPeople() function
+
+  useEffect(() => { // useEffect will load fetchPeople from the very start.
+    fetchPeople()
+  }, [])
+  // TODO: on load, call the fetchPeople() function (added useEffect)
+//-------------------------------------------------------------------------------------------------------------------
+//      GET
 
   const fetchPeople = () => {
     // TODO: fetch the list of people from the server
+    console.log('inside of fetchPeople')
+    axios.get('/famous_people')
+    .then((response) =>{
+      console.log(response.data)
+      setPeopleArray(response.data) //will update our famousPeopleArray with what we GET from database
+    }).catch((error) => {
+      console.log('Error GET /famous_people', error)
+    })
+    
   }
-
+//-------------------------------------------------------------------------------------------------------------------
   const addPerson = (evt) => {
     evt.preventDefault();
     console.log(`The person is ${famousPersonName} and they're famous for ${famousPersonRole}`);
