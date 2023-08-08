@@ -27,7 +27,7 @@ function FamousSection() {
     })
     
   }
-//-------------------------------------------------------------------------------------------------------------------
+//--------------------------------------------------------  -----------------------------------------------------------
   const addPerson = (evt) => {
     evt.preventDefault();
     console.log(`The person is ${famousPersonName} and they're famous for ${famousPersonRole}`);
@@ -59,7 +59,11 @@ function FamousSection() {
           {famousPersonName} is famous for "{famousPersonRole}".
         </p>
         <ul>
-          {famousPeopleArray}
+        {famousPeopleArray?.map(person => (
+          <li key={person.id}>
+            {person.name} is famous for {person.role}
+          </li>
+        ))}
         </ul>
       </section>
     );
